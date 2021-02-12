@@ -1,14 +1,40 @@
+import { AppBar, Button, IconButton, Link, MenuItem, Toolbar } from '@material-ui/core'
+import { useRouter } from 'next/router'
+import useStyles from '../styles/NavbarStyles'
 import React from 'react'
 
-export default function Navbar(props) {
+export default function Navbar() {
+    const classes = useStyles();
+    const router = useRouter();
     return(
-        <div>
-            <span>Icon</span>
-            <span><a href='#'> Select Item 1 </a></span>
-            <span><a href='#'> Select Item 2 </a></span>
-            <span><a href='#'> Select Item 3 </a></span>
-            <span><a href='#'> Log In </a></span>
-            <span><a href='#'> Plan With Biv! </a></span>
-        </div>
+        <AppBar position="static" style={ { background: 'white' } }>
+            <Toolbar className={classes.toolbar}>
+                <IconButton 
+                    edge="start"
+                    className={classes.logoButton}
+                    color="inherit" aria-label="logo"
+                >
+                    <MenuItem />
+                </IconButton>
+                <div className={classes.selectContainer}>
+                    <Link 
+                        className={classes.selectNavButton}
+                        href='/main'
+                    >
+                        Main
+                    </Link>
+                </div>
+                <div className={classes.logContainer}>
+                    <Button 
+                        className={classes.loginButton}
+                        color="inherit"
+                        onClick={() => router.push('/login')}
+                    >
+                        Log In
+                    </Button>
+                    <Button className={classes.signUpButton} color="inherit">Plan With Biv!</Button>
+                </div>
+            </Toolbar>
+        </AppBar>
     );
 }
