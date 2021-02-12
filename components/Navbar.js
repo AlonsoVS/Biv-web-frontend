@@ -1,4 +1,4 @@
-import { AppBar, Button, IconButton, Link, makeStyles, MenuItem, Toolbar } from '@material-ui/core'
+import { AppBar, Button, IconButton, Link, MenuItem, Toolbar } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import useStyles from '../styles/NavbarStyles'
 import React from 'react'
