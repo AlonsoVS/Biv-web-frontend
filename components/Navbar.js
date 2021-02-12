@@ -1,7 +1,17 @@
-import { AppBar, Button, IconButton, makeStyles, MenuItem, Toolbar } from '@material-ui/core';
+import { AppBar, Button, IconButton, Link, makeStyles, MenuItem, Toolbar } from '@material-ui/core'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const useStyles = makeStyles({
+    logContainer: {
+        display: 'flex',
+        margin: '0rem 0rem 0rem 12rem',
+        "& Button": {
+            padding: '6px 16px',
+            borderRadius: '4px',
+            textTransform: 'none',
+        }
+    },
     logoButton: {
         background: 'grey',
         height: '35px',
@@ -11,43 +21,34 @@ const useStyles = makeStyles({
     loginButton: {
         background: 'white',
         color: 'black',
-        textTransform: 'none'
-    },
-    logContainer: {
-        display: 'flex',
-        margin: '0rem 0rem 0rem 8rem'
     },
     selectContainer: {
         color: 'grey',
-        margin: '0 6rem',
+        margin: '0 12rem 0 4rem',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        "& button:active": {
-            background: 'green',
-            outline: 'none'
+        justifyContent: 'space-around'
+    },
+    selectNavButton: {
+        color: 'grey',
+        margin: '0rem 0.5rem',
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontSize: '14px',
+        fontWeight: 500,
+        "&:focus": {
+            color: 'rgb(45,168,146)'
         },
-        "& button:hover": {
-            color: 'green',
-            outline: 'none'
+        "&:hover": {
+            color: 'rgb(0,198,162)',
+            textDecoration: 'none'
         }
     },
     signUpButton: {
-        background: 'green',
+        background: 'rgb(0,198,162)',
         width: 'max-content',
         "&:hover": {
-            background: 'purple'
+            background: 'rgb(45,168,146)'
         }
-    },
-    selectNavButton: {
-        background: 'none',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        margin: '0rem 0.5rem',
-        "&:focus": {
-            outline: 'none'
-        },
     },
     toolbar: {
         background: 'white',
@@ -57,8 +58,9 @@ const useStyles = makeStyles({
     }
 });
 
-export default function Navbar(props) {
+export default function Navbar() {
     const classes = useStyles();
+    const router = useRouter();
     return(
         <AppBar position="static" style={ { background: 'white' } }>
             <Toolbar className={classes.toolbar}>
@@ -70,19 +72,22 @@ export default function Navbar(props) {
                     <MenuItem />
                 </IconButton>
                 <div className={classes.selectContainer}>
-                    <button className={classes.selectNavButton}>
-                        Select 1
-                    </button>
-                    <Button className={classes.selectNavButton}>
-                        Select 2
-                    </Button>
-                    <Button className={classes.selectNavButton}>
-                        Select 3
-                    </Button>
+                    <Link 
+                        className={classes.selectNavButton}
+                        href='/main'
+                    >
+                        Main
+                    </Link>
                 </div>
                 <div className={classes.logContainer}>
-                    <Button className={classes.loginButton} color="inherit">Log In</Button>
-                    <Button className={classes.signUpButton} color="inherit">Sign Up</Button>
+                    <Button 
+                        className={classes.loginButton}
+                        color="inherit"
+                        onClick={() => router.push('/login')}
+                    >
+                        Log In
+                    </Button>
+                    <Button className={classes.signUpButton} color="inherit">Plan With Biv!</Button>
                 </div>
             </Toolbar>
         </AppBar>
