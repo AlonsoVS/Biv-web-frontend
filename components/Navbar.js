@@ -1,7 +1,8 @@
-import { AppBar, Button, IconButton, Link, MenuItem, Toolbar } from '@material-ui/core'
+import { AppBar, Button, IconButton, MenuItem, Toolbar } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import useStyles from '../styles/NavbarStyles'
 import React from 'react'
+import Link from 'next/link'
 
 export default function Navbar() {
     const classes = useStyles();
@@ -17,21 +18,21 @@ export default function Navbar() {
                     <MenuItem />
                 </IconButton>
                 <div className={classes.selectContainer}>
-                    <Link 
+                    <Link
                         className={classes.selectNavButton}
-                        href='/main'
-                    >
+                        href='/main'>
                         Main
                     </Link>
                 </div>
                 <div className={classes.logContainer}>
-                    <Button 
-                        className={classes.loginButton}
-                        color="inherit"
-                        onClick={() => router.push('/login')}
-                    >
-                        Log In
-                    </Button>
+                    <Link href='/login'>
+                        <Button 
+                            className={classes.loginButton}
+                            color="inherit"
+                        >
+                            Log In
+                        </Button>
+                    </Link>
                     <Button className={classes.signUpButton} color="inherit">Plan With Biv!</Button>
                 </div>
             </Toolbar>
