@@ -1,7 +1,6 @@
 import { AppBar, Button, IconButton, InputBase, MenuItem, Toolbar } from '@material-ui/core'
 import Icon from '@mdi/react'
 import { mdiAccountCircle, mdiCog, mdiMenu } from '@mdi/js'
-import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import Typography from '@material-ui/core/Typography'
 import useStyles from '../styles/UserNavbarStyles'
