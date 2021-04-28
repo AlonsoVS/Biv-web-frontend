@@ -96,15 +96,13 @@ const useStyles = makeStyles({
     }
 });
 
-const res = ["/riverAndHouse.jpg",
-            "/cechRepublicChurch.jpg",
-            "/cechRepublic.jpg",
-            "/netherlandsBike.jpg"]
-
 export default function Travel(props) {
     const classes = useStyles();
     let { finished, comments, date, generalLocation, images, resume, started } = props;
-    images = res;
+    images = ["/riverAndHouse.jpg",
+    "/cechRepublicChurch.jpg",
+    "/cechRepublic.jpg",
+    "/netherlandsBike.jpg"];
     started = false;
     finished = !started;
     date = '27-04-2021';
@@ -139,7 +137,7 @@ export default function Travel(props) {
                     <Typography
                             className={classes.description}
                             align='justify'
-                            variant='h7'
+                            variant='h5'
                         >
                             {resume}
                     </Typography>

@@ -1,11 +1,12 @@
 import Link from "next/link"
+import Navbar from "../components/Navbar";
 
 export default function Login(props) {
-    const { activateNavbar } = props;
     return <>
-            <h1> This is the about page</h1>
+            <Navbar/>
+            <h1> This is the login page</h1>
             <Link href='/home'>
-                <a onClick={() => activateNavbar(false)}>User Home</a>
+                <a>User Home</a>
             </Link>
             </>
 }
