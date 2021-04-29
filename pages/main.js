@@ -3,11 +3,13 @@ import Image from 'next/image'
 import { Button } from '@material-ui/core'
 import About from '../components/About'
 import useStyles from '../styles/MainStyles'
+import Navbar from '../components/Navbar'
 
 export default function Main() {
     const classes = useStyles();
     return(
         <div>
+            <Navbar/>
             <div className={classes.mainImage}>
                 <div className={classes.floatContainer}>
                     <p className={classes.titleText}>Plan your trip</p>
