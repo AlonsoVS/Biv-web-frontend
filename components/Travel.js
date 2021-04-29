@@ -127,7 +127,11 @@ export default function Travel(props) {
                     {images.map(image => 
                     <Image
                         className={classes.image}
-                        onClick={()=>router.push(`${pathname}/?src=${image}`, undefined, { shallow: true })}
+                        /* onClick={()=>router.push(`${pathname}/?src=${image}`, undefined, { shallow: true })} */
+                        onClick={()=>router.push({
+                            pathname: pathname,
+                            query: { src: image, allImages: images }
+                        }, `${pathname}/?src=${image}`, { shallow: true })}
                         src={image} layout='responsive'  alt="image" width='50' height='50' />)}
                 </div>
                 <div className={classes.textContent}>
