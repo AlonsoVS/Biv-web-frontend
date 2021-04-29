@@ -1,8 +1,8 @@
-import { Button, IconButton, makeStyles, Typography } from '@material-ui/core'
+import { Button, makeStyles, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import { mdiCommentTextMultiple } from '@mdi/js'
 import Icon from '@mdi/react'
-import { ImageSharp } from '@material-ui/icons';
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles({
     travel: {
@@ -93,12 +93,16 @@ const useStyles = makeStyles({
         fontSize: 'small',
         padding: '3px',
         height: 'fit-content',
+    },
+    image: {
+        cursor: 'pointer'
     }
 });
 
 export default function Travel(props) {
     const classes = useStyles();
-    let { finished, comments, date, generalLocation, images, resume, started } = props;
+    const router = useRouter();
+    let { finished, comments, date, generalLocation, images, resume, started, pathname } = props;
     images = ["/riverAndHouse.jpg",
     "/cechRepublicChurch.jpg",
     "/cechRepublic.jpg",
@@ -121,7 +125,10 @@ export default function Travel(props) {
     return <div className={classes.travel}>
                 <div className={classes.collageImages}>
                     {images.map(image => 
-                            <Image src={image} layout='responsive'  alt="image" width='50' height='50' />)}
+                    <Image
+                        className={classes.image}
+                        onClick={()=>router.push(`${pathname}/?src=${image}`, undefined, { shallow: true })}
+                        src={image} layout='responsive'  alt="image" width='50' height='50' />)}
                 </div>
                 <div className={classes.textContent}>
                     <div className={classes.infoSupButtons}>

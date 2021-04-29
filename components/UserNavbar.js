@@ -10,7 +10,7 @@ export default function UserNavbar() {
     const classes = useStyles();
     const shadow = '0px 0px 8px 0.5px rgb(0 0 0 / 20%), inset 0px 0px 0px 0px rgb(0 0 0 / 14%), 0px 0px 0px 0px rgb(0 0 0 / 12%)';
     return(
-        <AppBar position="static" style={ { background: 'white', boxShadow: shadow } }>
+        <AppBar position="static" style={ { background: 'white', boxShadow: shadow, zIndex: '10' } }>
             <Toolbar className={classes.toolbar}>
                 <div className={classes.selectContainer}>
                     <IconButton edge="start" className={classes.customUserIcons} color="inherit" aria-label="menu">
