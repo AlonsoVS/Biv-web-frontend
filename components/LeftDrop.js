@@ -53,9 +53,9 @@ export default function LeftDrop() {
                     <CommentForm formType='description'/> */}
                     <div className={classes.dropBoxContainer}>
                         <SearchField/>
-                        <ResourceBox resourcesType='Images' resources={['image', 'image', 'image']}/>
-                        <ResourceBox resourcesType='Videos' resources={['video', 'video', 'video']}/>
-                        <ResourceBox resourcesType='Recent' resources={['recent', 'recent', 'recent']}/>
+                        <ResourceBox resourcesType='Images' resources={['image1', 'image2', 'image3', 'image4']}/>
+                        <ResourceBox resourcesType='Videos' resources={['video1', 'video2', 'video3']}/>
+                        <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3']}/>
                     </div>
                 </div>
                 <Button className={classes.closeDropButton}>
