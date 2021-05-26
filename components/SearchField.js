@@ -2,11 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     width: 400,
-    borderRadius: '25px'
+    borderRadius: '25px',
+    alignSelf: 'center',
+    margin: '0 0 1rem',
+    boxShadow: 'none',
+    border: '1px solid'
   },
   input: {
     marginLeft: theme.spacing(1),
