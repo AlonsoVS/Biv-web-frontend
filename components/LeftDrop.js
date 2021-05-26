@@ -9,7 +9,8 @@ const useStyles = makeStyles({
     dropContainer:{
         display: 'grid',
         gridTemplateColumns: '420px 0.5rem',
-        height: '100%'
+        height: '100%',
+        position: 'relative'
     },
     dropRoot: {
         background: 'white',
@@ -53,9 +54,13 @@ export default function LeftDrop() {
                     <CommentForm formType='description'/> */}
                     <div className={classes.dropBoxContainer}>
                         <SearchField/>
-                        <ResourceBox resourcesType='Images' resources={['image1', 'image2', 'image3', 'image4']}/>
+                        <ResourceBox 
+                                    resourcesType='Images' 
+                                    resources={['image1', 'image2', 'image3',
+                                                 'image4', 'image5', 'image6',
+                                                 'image7', 'image8', 'image9']}/>
                         <ResourceBox resourcesType='Videos' resources={['video1', 'video2', 'video3']}/>
-                        <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3']}/>
+                        {/* <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3']}/> */}
                     </div>
                 </div>
                 <Button className={classes.closeDropButton}>

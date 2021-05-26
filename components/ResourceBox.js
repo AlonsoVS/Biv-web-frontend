@@ -26,15 +26,26 @@ const useStyles = makeStyles({
     resourceElement: {
         background: 'grey',
         width: '100px',
-        height: '100%',
-        margin: '0 5px'
+        height: '100px',
+        margin: '5px'
     },
     resourceDrop: {
-        height: '100px',
+        height: 'fit-content',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center'
+    },
+    resourcesContainer: {
+        height: 'fit-content',
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    resourcesContainerExpanded: {
+        height: 'fit-content',
+        display: 'grid',
+        gridTemplateColumns: '110px 110px 110px',
+        gridTemplateRows: '110px 110px 110px'
     }
 });
 
@@ -58,9 +69,12 @@ export default function ResourceBox(props) {
     const classes = useStyles();
     const linkedElements = chargeElements(resources);
 
+    const [resourcesContainerClass, setContainerClass] = useState({switch: 0, class: classes.resourcesContainer});
+
     const elementsShowing = (list, option) => {
         if (option == 0) {
-            return list.filter((item, idx) => idx < 3);
+            const maxShow = resourcesContainerClass.switch == 1 ? list.length : 3;
+            return list.filter((item, idx) => idx < maxShow);
         }
         if (option == 1) {
             const nextIndex = showing.map(item => item.next);
@@ -80,7 +94,12 @@ export default function ResourceBox(props) {
         }
     }
 
-    const [showing, setShowing] = useState(elementsShowing(linkedElements, 0));
+    const showElements = elementsShowing(linkedElements, 0);
+
+    const [showing, setShowing] = useState(showElements);
+    useEffect(() => {
+        setShowing(showElements);
+    }, [resourcesContainerClass]);
 
     const handleNext = () => {
         const show = elementsShowing(linkedElements, 1);
@@ -92,8 +111,17 @@ export default function ResourceBox(props) {
         setShowing(show);
     }
 
+    const handleExpandBox = () => {
+        if (resources.length > 3) {
+            const newClass = resourcesContainerClass.switch == 0 ?
+                                                            {switch: 1, class: classes.resourcesContainerExpanded }
+                                                            : { switch: 0, class: classes.resourcesContainer };
+            setContainerClass(newClass);   
+        }
+    }
+
     return <div className={classes.boxRoot}>
-        <div className={classes.title}>
+        <div className={classes.title} onClick={handleExpandBox}>
             <Typography className={classes.titleText} variant='subtitle1'>
                 {resourcesType}
             </Typography>
@@ -110,7 +138,9 @@ export default function ResourceBox(props) {
                     size={1}
                 />
             </Button>
-            {showing.map((element)=> <div className={classes.resourceElement}>{element.src}</div>)}
+            <div className={resourcesContainerClass.class}>
+                {showing.map((element) => <div className={classes.resourceElement}>{element.src}</div>)}
+            </div>
             <Button className={classes.slideButton} onClick={handleNext}>
                 <Icon
                     path={mdiChevronRight}
