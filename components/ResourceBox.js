@@ -1,6 +1,6 @@
 import { Button, makeStyles, Typography } from "@material-ui/core"
 import Icon from '@mdi/react'
-import { mdiChevronDown, mdiChevronLeft, mdiChevronRight } from '@mdi/js'
+import { mdiChevronDown, mdiChevronLeft, mdiChevronRight, mdiChevronUp } from '@mdi/js'
 import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
@@ -69,11 +69,12 @@ export default function ResourceBox(props) {
     const classes = useStyles();
     const linkedElements = chargeElements(resources);
 
-    const [resourcesContainerClass, setContainerClass] = useState({switch: 0, class: classes.resourcesContainer});
+    const [expandContainer, setExpand] = useState({expanded: false, 
+                                                    class: classes.resourcesContainer});
 
     const elementsShowing = (list, option) => {
         if (option == 0) {
-            const maxShow = resourcesContainerClass.switch == 1 ? list.length : 3;
+            const maxShow = expandContainer.expanded == 1 ? list.length : 3;
             return list.filter((item, idx) => idx < maxShow);
         }
         if (option == 1) {
@@ -99,7 +100,7 @@ export default function ResourceBox(props) {
     const [showing, setShowing] = useState(showElements);
     useEffect(() => {
         setShowing(showElements);
-    }, [resourcesContainerClass]);
+    }, [expandContainer]);
 
     const handleNext = () => {
         const show = elementsShowing(linkedElements, 1);
@@ -113,10 +114,10 @@ export default function ResourceBox(props) {
 
     const handleExpandBox = () => {
         if (resources.length > 3) {
-            const newClass = resourcesContainerClass.switch == 0 ?
-                                                            {switch: 1, class: classes.resourcesContainerExpanded }
-                                                            : { switch: 0, class: classes.resourcesContainer };
-            setContainerClass(newClass);   
+            const newClass = expandContainer.expanded ? 
+                                                { expanded: false, class: classes.resourcesContainer } :
+                                                { expanded: true, class: classes.resourcesContainerExpanded };
+            setExpand(newClass);   
         }
     }
 
@@ -125,7 +126,7 @@ export default function ResourceBox(props) {
             <Typography className={classes.titleText} variant='subtitle1'>
                 {resourcesType}
             </Typography>
-            <Icon path={mdiChevronDown}
+            <Icon path={expandContainer.expanded ? mdiChevronUp : mdiChevronDown}
                 title="Expand List"
                 size={1}
             />
@@ -138,7 +139,7 @@ export default function ResourceBox(props) {
                     size={1}
                 />
             </Button>
-            <div className={resourcesContainerClass.class}>
+            <div className={expandContainer.class}>
                 {showing.map((element) => <div className={classes.resourceElement}>{element.src}</div>)}
             </div>
             <Button className={classes.slideButton} onClick={handleNext}>

@@ -73,7 +73,7 @@ export default function LeftDrop() {
         <Button className={classes.closeDropButton} onClick={()=>setOpen(!open)}>
                     <Icon
                         name="Close Drop"
-                        path={mdiChevronLeft}
+                        path={open ? mdiChevronLeft:mdiChevronRight}
                         size={1}
                     />
         </Button>
