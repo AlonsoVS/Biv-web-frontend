@@ -3,11 +3,12 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles({
     page:{
         background: '#F3F3F3',
-        width: '100%',
+        width: '1000px',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        position: 'relative'
+        position: 'relative',
+        alignSelf: 'center'
     }
 });
 

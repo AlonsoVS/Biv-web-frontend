@@ -11,14 +11,17 @@ const useStyles = makeStyles({
         flexDirection: 'row',
         flexWrap: 'nowrap',
         position: 'relative',
-        alignItems: 'center'
+        alignItems: 'center',
+        overflow: 'hidden'
     },
     pageContainer: {
-        width: '1000px',
-        height: '800px',
+        width: '100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        position: 'relative'
+        position: 'relative',
+        marginLeft: '-30px',
+        overflow: 'auto'
     }
 });
 

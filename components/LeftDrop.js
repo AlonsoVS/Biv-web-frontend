@@ -4,6 +4,7 @@ import SearchField from "../components/SearchField"
 import ResourceBox from "./ResourceBox"
 import Icon from '@mdi/react'
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
+import { useState } from "react"
 
 const useStyles = makeStyles({
     dropContainer:{
@@ -22,6 +23,7 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         border: '1px grey',
         borderStyle: 'none solid',
+        overflow: 'auto'
     },
     closeDropButton: { 
         zIndex: 1,
@@ -32,7 +34,8 @@ const useStyles = makeStyles({
         height: '70px',
         borderRadius: '0 100px 100px 0',
         border: '1px solid grey',
-        minWidth: '0px'
+        minWidth: '40px',
+        marginLeft: '-10px'
     },
     dropBoxContainer: {
         width: '100%',
@@ -47,8 +50,9 @@ const useStyles = makeStyles({
 });
 
 export default function LeftDrop() {
+    const [open, setOpen] = useState(true);
     const classes = useStyles();
-    return <div className={classes.dropContainer}>
+    return <> {open && <div className={classes.dropContainer}> 
                 <div className={classes.dropRoot}>
                     {/* <CommentForm formType='comment'/>
                     <CommentForm formType='description'/> */}
@@ -60,15 +64,18 @@ export default function LeftDrop() {
                                                  'image4', 'image5', 'image6',
                                                  'image7', 'image8', 'image9']}/>
                         <ResourceBox resourcesType='Videos' resources={['video1', 'video2', 'video3']}/>
-                        {/* <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3']}/> */}
+                        <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3',
+                                                                        'recent4', 'recent5', 'recent6',
+                                                                        'recent7', 'recent8', 'recent9']}/>
                     </div>
                 </div>
-                <Button className={classes.closeDropButton}>
+        </div>} 
+        <Button className={classes.closeDropButton} onClick={()=>setOpen(!open)}>
                     <Icon
                         name="Close Drop"
                         path={mdiChevronLeft}
                         size={1}
                     />
-                </Button>
-        </div> 
+        </Button>
+        </>
 }
