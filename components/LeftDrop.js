@@ -1,4 +1,4 @@
-import { Button, makeStyles } from "@material-ui/core"
+import { Button, makeStyles, Typography } from "@material-ui/core"
 import CommentForm from "./CommentForm"
 import SearchField from "../components/SearchField"
 import ResourceBox from "./ResourceBox"
@@ -46,28 +46,77 @@ const useStyles = makeStyles({
         position: 'relative', 
         alignSelf: 'center',
         margin: '2rem 0 0'
+    },
+    searchResult: {
+        width: '170px',
+        height: '150px',
+        margin: '10px 0',
+        background: 'grey'
+    },
+    searchResultContainer: {
+        margin: '2rem 0 0',
+        height: '100%',
+        width: '100%',
+        display: 'grid',
+        gridTemplateColumns: '50% 50%',
+        alignContent: 'baseline',
+        justifyItems: 'center',
+        overflow: 'auto'
     }
 });
 
-export default function LeftDrop() {
+export default function LeftDrop(props) {
+    let { resources } = props;
+    resources = {images: ['image1', 'image2', 'image3',
+                        'image4', 'image5', 'image6',
+                        'image7', 'image8', 'image9'],
+                videos:  ['video1', 'video2', 'video3'],
+                recents: ['recent1', 'recent2', 'recent3',
+                        'recent4', 'recent5', 'recent6',
+                        'recent7', 'recent8', 'recent9']}
     const [open, setOpen] = useState(true);
     const classes = useStyles();
-    return <> {open && <div className={classes.dropContainer}> 
+
+    const [searching, setSearching] = useState(false);
+
+    const [searchResult, setSearchResult] = useState(false);
+
+    const searchResource = (res) => {
+        const resContent = Object.values(resources);
+        let found = 'Not found';
+        let idx = 0;
+        while (idx < resContent.length && found == 'Not found') {
+            const resColection = resContent[idx];
+            found = resColection.find(element => element == res.toLowerCase()) || 'Not found';
+            idx++;
+        }
+        return found;
+    }
+
+    return <> {open && <div className={classes.dropContainer}>
                 <div className={classes.dropRoot}>
                     {/* <CommentForm formType='comment'/>
                     <CommentForm formType='description'/> */}
-                    <div className={classes.dropBoxContainer}>
-                        <SearchField/>
-                        <ResourceBox 
-                                    resourcesType='Images' 
-                                    resources={['image1', 'image2', 'image3',
-                                                 'image4', 'image5', 'image6',
-                                                 'image7', 'image8', 'image9']}/>
-                        <ResourceBox resourcesType='Videos' resources={['video1', 'video2', 'video3']}/>
-                        <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3',
-                                                                        'recent4', 'recent5', 'recent6',
-                                                                        'recent7', 'recent8', 'recent9']}/>
-                    </div>
+                    <SearchField search={searchResource}
+                                setSearchState={setSearching}
+                                searchState={searching}
+                                setResult={setSearchResult}/>
+
+                    {!searching &&
+                        <div className={classes.dropBoxContainer}>
+                            <ResourceBox 
+                                        resourcesType='Images' 
+                                        resources={['image1', 'image2', 'image3',
+                                                    'image4', 'image5', 'image6',
+                                                    'image7', 'image8', 'image9']}/>
+                            <ResourceBox resourcesType='Videos' resources={['video1', 'video2', 'video3']}/>
+                            <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3',
+                                                                            'recent4', 'recent5', 'recent6',
+                                                                            'recent7', 'recent8', 'recent9']}/>
+                        </div>
+                        || <div className={classes.searchResultContainer}>
+                                <div className={classes.searchResult}>{searchResult}</div>
+                            </div>}
                 </div>
         </div>} 
         <Button className={classes.closeDropButton} onClick={()=>setOpen(!open)}>
