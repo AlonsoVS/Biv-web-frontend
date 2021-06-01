@@ -25,8 +25,23 @@ export default makeStyles({
         background: 'white',
         color: 'black',
     },
-    root: {
-        flexGrow: 1,
+    travelTitleField: {
+        height: 'fit-content',
+        width: 'min-content'
+    },
+    travelTitleInput: {
+        width: 'fit-content',
+        height: '30px',
+        maxWidth: '250px',
+        '&:hover': {
+            border: '1px solid rgb(0,198,162)',
+            borderRadius: '2px'
+        },
+        '&:focus': {
+            outline: 'thin',
+            border: '1px solid rgb(0,198,162)',
+            borderRadius: '2px'
+        }
     },
     search: {
         color: 'grey',
@@ -74,6 +89,9 @@ export default makeStyles({
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
         fontSize: '14px',
         fontWeight: 500,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         "&:focus": {
             color: 'rgb(45,168,146)'
         },
@@ -112,5 +130,18 @@ export default makeStyles({
         cursor: 'pointer',
         margin: '0px 12px 0px 0',
         padding: '0'
-    }
+    },
+    travelTitle: {
+        color: 'grey',
+        position: 'relative',
+        borderColor: 'black',
+        height: '50px',
+        backgroundColor: 'transparent',
+        '&:checked': {
+            backgroundColor: '#00c6a214',
+        },
+        alignItems: 'center',
+        display: 'flex',
+        margin: 'auto',
+    },
 });

@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core"
 import BookPage from "../components/BookPage"
 import LeftDrop from "../components/LeftDrop"
-import UserNavbar from "../components/UserNavbar"
+import CreateNavbar from "../components/CreateNavbar"
 
 const useStyles = makeStyles({
     rootContainer: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 export default function Create() {
     const classes = useStyles();
     return <div style={{ height: '100vh', width: '100%', display: 'flex', flexDirection: 'column' }}>
-        <UserNavbar/>
+        <CreateNavbar/>
         <div className={classes.rootContainer}>
             <LeftDrop/>
             <div className={classes.pageContainer}>
