@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
     page:{
@@ -8,11 +8,20 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        alignItems: 'center'
+    },
+    resource: {
+        fontSize: 'large',
+        width: 'fitContent',
+        height: 'fitContent'
     }
 });
 
-export default function BookPage() {
+export default function BookPage(props) {
+    const { resources } = props;
     const classes = useStyles();
-    return <div className={classes.page}></div>
+    return <div className={classes.page}>
+        {resources.map( resource => <div className={classes.resource}>{resource}</div> )}
+    </div>
 }
