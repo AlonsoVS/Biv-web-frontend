@@ -52,6 +52,7 @@ export default makeStyles({
         background: 'white',
         display: 'flex',
         justifyContent: 'space-between',
-        margin: 'auto'
+        margin: 'auto',
+        overflow: 'hidden'
     }
 });

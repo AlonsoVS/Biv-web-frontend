@@ -33,8 +33,8 @@ export default function UserNavbar() {
                         <a className={classes.selectNavButton}>Home</a>
                     </Link>
                     <Link
-                        href='/new'>
-                        <a className={classes.selectNavButton}>New</a>
+                        href='/create'>
+                        <a className={classes.selectNavButton}>Create</a>
                     </Link>
                 </div>
 
@@ -76,7 +76,7 @@ export default function UserNavbar() {
                     >
                         <Icon 
                             path={mdiCog}
-                            title="User Profile"
+                            title="Settings"
                             size={1}
                         />
                     </IconButton>
