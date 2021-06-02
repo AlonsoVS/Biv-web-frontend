@@ -1,38 +1,35 @@
-import { Button } from "@material-ui/core";
-import { useState } from "react";
-import TextField from '@material-ui/core/TextField';
-
+import { InputBase } from "@material-ui/core";
+import { useEffect, useState } from "react";
 
 export default function CommentForm(props) {
 
-    const [content, setContent] = useState({ textContent: '' });
-    const { formType } = props;
+    const [content, setContent] = useState('');
+    const { formType, className, checkAddActive } = props;
 
     const handleChange = (event) => {
-        setContent({textContent: event.target.value});
-        console.log('Change');
-        console.log(event);
+        event.preventDefault();
+        setContent(event.target.value);
     };
 
+    useEffect(()=>{
+        checkAddActive(content);
+    }, [content]);
+
     const handleSubmit = (event) => {
-        console.log(content);
-        console.log(event);
         event.preventDefault();
     };
 
-    return (
-    <form onSubmit={handleSubmit}>
-        <TextField
-          id="outlined-textarea"
-          label={`Add ${formType}`}
-          placeholder={`${formType.charAt(0).toUpperCase() + formType.substring(1)} Content`}
-          multiline
-          name={formType}
-          onChange={handleChange}
-          value={content.textContent}
-          variant="outlined"
-        />
-        <input type='submit' value='Send'/>
+    return  <form onSubmit={handleSubmit} className={className} autoComplete >
+          <InputBase
+                id={`new-${formType}-field`}
+                label={`Add ${formType}`}
+                inputProps={{ 'aria-label': 'naked' }}
+                multiline='true'
+                name={formType}
+                onChange={handleChange}
+                placeholder={`${formType.charAt(0).toUpperCase() + formType.substring(1)} Content`}
+                value={content}
+            />
     </form>
-    );
+    ;
 }

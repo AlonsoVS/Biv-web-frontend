@@ -33,6 +33,7 @@ export default makeStyles({
         width: 'fit-content',
         height: '30px',
         maxWidth: '250px',
+        padding: '4px',
         '&:hover': {
             border: '1px solid rgb(0,198,162)',
             borderRadius: '2px'
