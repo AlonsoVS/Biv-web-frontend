@@ -131,7 +131,7 @@ export default function Travel(props) {
                         onClick={()=>router.push({
                             pathname: pathname,
                             query: { src: image, allImages: images }
-                        }, `${pathname}/?src=${image}`, { shallow: true })}
+                        }, `${router.pathname}/?src=${image}`, { shallow: true })}
                         src={image} layout='responsive'  alt="image" width='50' height='50' />)}
                 </div>
                 <div className={classes.textContent}>
