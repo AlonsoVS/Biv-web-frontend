@@ -55,7 +55,7 @@ function formatStr(str) {
 
 export default function LoginForm(props) {
 
-    const { loginType, operationTitle } = props;
+    const { loginType, operationTitle, dataReceiver } = props;
 
     const dataInputs = loginType == "sign up" ? {
                                                     firstName: '',
@@ -79,9 +79,13 @@ export default function LoginForm(props) {
         setFormData({...formData, ...inputData})
     };
 
-    useEffect(()=>console.log(formData));
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(event);
+        dataReceiver(formData);
+    };
 
-    return <form className={classes.formRoot}>
+    return <form className={classes.formRoot} onSubmit={handleSubmit}>
         <label className={classes.labelForm}>
             <Typography variant='h5'>{operationTitle}</Typography>
         </label>

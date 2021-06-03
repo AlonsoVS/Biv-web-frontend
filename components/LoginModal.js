@@ -82,9 +82,20 @@ export default function LoginModal(props) {
 
     const [loginType, setLoginType] = useState(operation);
 
+    const [userData, setUserData] = useState();
+
     const handleClose = () => {
         router.back();
-    }
+    };
+
+    const dataReceiver = (data) => {
+        setUserData(data);
+        router.push(
+            '/home',
+            undefined,
+            {shallow: true}
+        );
+    };
 
     return <div className={classes.rootLogin} >
         <div className={classes.loginBackground} onClick={handleClose}>
@@ -110,9 +121,11 @@ export default function LoginModal(props) {
                     Sign Up
                 </a>
             </div>
-            <LoginForm loginType={loginType} operationTitle={loginType == 'sign up' ? 
-                                                                        'Create your account'
-                                                                        : 'Sign in to your account'}/>
+            <LoginForm 
+                loginType={loginType} 
+                operationTitle={loginType == 'sign up' ? 'Create your account' : 'Sign in to your account'}
+                dataReceiver={dataReceiver}
+                />
         </div>
     </div>
 }
