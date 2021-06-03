@@ -1,10 +1,11 @@
 import { AppBar, Button, IconButton, MenuItem, Toolbar } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import useStyles from '../styles/NavbarStyles'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 
-export default function Navbar() {
+export default function Navbar(props) {
+    const { openCloseLogin } = props;
     const classes = useStyles();
     const router = useRouter();
     return(
@@ -25,15 +26,20 @@ export default function Navbar() {
                     </Link>
                 </div>
                 <div className={classes.logContainer}>
-                    <Link href='/login'>
-                        <Button 
-                            className={classes.loginButton}
-                            color="inherit"
+                    <Button 
+                        className={classes.loginButton}
+                        color="inherit"
+                        onClick={()=>openCloseLogin('sign in')}
+                    >
+                        Log In
+                    </Button>
+                    <Button 
+                        className={classes.signUpButton} 
+                        color="inherit"
+                        onClick={()=>openCloseLogin('sign up')}
                         >
-                            Log In
-                        </Button>
-                    </Link>
-                    <Button className={classes.signUpButton} color="inherit">Plan With Biv!</Button>
+                        Plan With Biv!
+                    </Button>
                 </div>
             </Toolbar>
         </AppBar>
