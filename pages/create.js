@@ -37,8 +37,8 @@ export default function Create() {
     const image1 = '/mainImage.jpg';
     const image2 = '/netherlands.jpg';
     const res = [<Image src={image1} layout='intrinsic' alt="image" width={500} height={400} />
-    , 'This is a note for the travel', 'This is other test note', 'Note3', 'Still have not video',
-    <Image src={image2} layout='intrinsic' alt="image" width={300} height={200} />];
+    ,<Image src={image2} layout='intrinsic' alt="image" width={300} height={200} />,
+    'This is a note for the travel', 'This is other test note', 'Note3', 'Still have not video',];
     return <div style={{ height: '100vh', width: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <CreateNavbar/>
         <div className={classes.rootContainer}>
