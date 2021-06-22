@@ -1,5 +1,6 @@
 import { Button, makeStyles } from "@material-ui/core";
 import Image from "next/image";
+import Template from "./Template";
 
 const useStyles = makeStyles({
     page:{
@@ -106,7 +107,8 @@ const useStyles = makeStyles({
     template: {
         width: '100%',
         height: '100%',
-        background: 'rgba(250, 231, 204, 0.33)'
+        background: 'rgba(250, 231, 204, 0.33)',
+        position: 'absolute'
     },
     image1: {
         width: '220px',
@@ -178,9 +180,41 @@ export default function BookPage(props) {
         e.preventDefault();
     }
 
+    const currentTemplate = {
+        id: '0000001',
+        struct: [
+            {
+                name: 'Main Image',
+                type: 'image',
+                src: '/mainImage.jpg',
+                style: {
+                    width: 300,
+                    height: 300,
+                    position: 'absolute',
+                    top: 200,
+                    right: 200
+                }			
+            },
+            // {
+            //     name: 'title',
+            //     type: 'text',
+            //     src: 'Title Text',
+            //     style: {
+            //         width: 300,
+            //         height: 300,
+            //         position: 'absolute',
+            //         top: '100px',
+            //         right: '200px'
+            //     }		
+            // }
+            
+        ]
+    };
+    
+
     return <div className={classes.page}>
             <div className={classes.template}>
-                <div className={classes.locationFieldContainer}>
+                {/* <div className={classes.locationFieldContainer}>
                     <textarea
                         className={classes.locationField}
                         maxlength={22}
@@ -253,7 +287,9 @@ export default function BookPage(props) {
                 </textarea>
                 <div className={classes.imageBottomRight}>
                     <Image src='/tranvia.jpg' layout='fill'/>
-                </div>
+                </div> */}
+
+                <Template template={currentTemplate} />
             </div> 
     </div>
 }
