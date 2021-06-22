@@ -6,12 +6,12 @@ function TemplateElement(props) {
     const [elementProps, setElementProps] = useState(props);
 
     useEffect(() => {
-        const top = props.newPosition.y;
-        const left = props.newPosition.x;
-        const style = {...props.style, top, left};
-        const currentProps = {...props, style};
+        const y = props.position.y;
+        const x = props.position.x;
+        const position = {...props.position, y, x};
+        const currentProps = {...props, position};
         setElementProps(currentProps);
-    }, [props.newPosition]);
+    }, [props.position]);
 
     const ref = useRef();
 

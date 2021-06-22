@@ -189,11 +189,12 @@ export default function BookPage(props) {
                 src: '/mainImage.jpg',
                 style: {
                     width: 300,
-                    height: 300,
-                    position: 'absolute',
-                    top: 10,
-                    left: 10
-                }			
+                    height: 300
+                },
+                position: {
+                    y: 10,
+                    x: 10
+                }
             },
             // {
             //     name: 'title',

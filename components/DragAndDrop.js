@@ -33,15 +33,23 @@ export default function DragAndDrop(props) {
         event.preventDefault();
     }
 
+    const customZIndex = focused? 2: 1;
+
     return (
-        <div 
+        <div
+            style={{ 
+                zIndex: customZIndex,
+                left: newPosition.x,
+                top: newPosition.y,
+                position: 'absolute'
+             }} 
             className='DragAndDrop'
             onMouseUp={ onMouseUp }
             onMouseDown= { onMouseDown }
             onMouseLeave={ onMouseLeave }
             onMouseMove={ onMouseMove }
         >
-            { React.cloneElement(props.children, { newPosition: newPosition }) }
+            { React.cloneElement(props.children, { position: newPosition }) }
         </div>
     );
 }

@@ -5,7 +5,7 @@ function Template(props) {
     return (
         props.template.struct.map(element => 
                 {   
-                    const position = { x: element.style.left, y: element.style.top };
+                    const position = { x: element.position.x, y: element.position.y };
                     return <DragAndDrop position={position}><TemplateElement {...element}/></DragAndDrop>
                 }
         )
