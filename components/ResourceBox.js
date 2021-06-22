@@ -2,6 +2,7 @@ import { Button, makeStyles, Typography } from "@material-ui/core"
 import Icon from '@mdi/react'
 import { mdiChevronDown, mdiChevronLeft, mdiChevronRight, mdiChevronUp } from '@mdi/js'
 import { useEffect, useState } from "react";
+import ResourceElement from "./ResourceElement";
 
 const useStyles = makeStyles({
     title: {
@@ -115,8 +116,8 @@ export default function ResourceBox(props) {
     const handleExpandBox = () => {
         if (resources.length > 3) {
             const newClass = expandContainer.expanded ? 
-                                                { expanded: false, class: classes.resourcesContainer } :
-                                                { expanded: true, class: classes.resourcesContainerExpanded };
+                                { expanded: false, class: classes.resourcesContainer } :
+                                { expanded: true, class: classes.resourcesContainerExpanded };
             setExpand(newClass);   
         }
     }
@@ -140,7 +141,11 @@ export default function ResourceBox(props) {
                 />
             </Button>
             <div className={expandContainer.class}>
-                {showing.map((element) => <div className={classes.resourceElement}>{element.src}</div>)}
+                {
+                    showing.map( (element) => {
+                        return <ResourceElement {...element} />
+                    })
+                }
             </div>
             <Button className={classes.slideButton} onClick={handleNext}>
                 <Icon
