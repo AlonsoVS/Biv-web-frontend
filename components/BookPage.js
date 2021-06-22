@@ -191,8 +191,8 @@ export default function BookPage(props) {
                     width: 300,
                     height: 300,
                     position: 'absolute',
-                    top: 200,
-                    right: 200
+                    top: 10,
+                    left: 10
                 }			
             },
             // {

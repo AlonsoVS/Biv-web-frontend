@@ -1,12 +1,27 @@
 import Image from "next/image";
-import { useState } from "react";
-import { Button, makeStyles } from "@material-ui/core";
-
+import { useEffect, useRef, useState } from "react";
 
 function TemplateElement(props) {
+
     const [elementProps, setElementProps] = useState(props);
+
+    useEffect(() => {
+        const top = props.newPosition.y;
+        const left = props.newPosition.x;
+        const style = {...props.style, top, left};
+        const currentProps = {...props, style};
+        setElementProps(currentProps);
+    }, [props.newPosition]);
+
+    const ref = useRef();
+
     return (
-        <div label={elementProps.name} style={elementProps.style}>
+        <div
+            id={elementProps.name} 
+            label={elementProps.name} 
+            style={elementProps.style}
+            ref={ref}
+        >
             {
                 props.type === 'image'?
                     <Image 
@@ -17,20 +32,6 @@ function TemplateElement(props) {
                     
                     <p>{elementProps.src}</p>
             }
-            <Button onClick={() => { 
-                const top = elementProps.style.top - 10;
-                const style = {...elementProps.style, top};
-                let elProps = {...elementProps, style}; 
-                setElementProps({...elProps})}}>
-                    Up
-            </Button>
-            <Button onClick={() => { 
-                const top = elementProps.style.top + 10;
-                const style = {...elementProps.style, top};
-                let elProps = {...elementProps, style}; 
-                setElementProps({...elProps})}}>
-                    Down
-            </Button>
         </div>  
     );
 }
