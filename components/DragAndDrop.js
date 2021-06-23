@@ -41,7 +41,8 @@ export default function DragAndDrop(props) {
                 zIndex: customZIndex,
                 left: newPosition.x,
                 top: newPosition.y,
-                position: 'absolute'
+                position: 'absolute',
+                cursor: 'pointer'
              }} 
             className='DragAndDrop'
             onMouseUp={ onMouseUp }

@@ -67,13 +67,6 @@ const useStyles = makeStyles({
 
 export default function LeftDrop(props) {
     let { resources } = props;
-    resources = {images: ['image1', 'image2', 'image3',
-                        'image4', 'image5', 'image6',
-                        'image7', 'image8', 'image9'],
-                videos:  ['video1', 'video2', 'video3'],
-                recents: ['recent1', 'recent2', 'recent3',
-                        'recent4', 'recent5', 'recent6',
-                        'recent7', 'recent8', 'recent9']}
     const [open, setOpen] = useState(true);
     const classes = useStyles();
 
@@ -93,38 +86,43 @@ export default function LeftDrop(props) {
         return found;
     }
 
-    return <> {open && <div className={classes.dropContainer}>
-                <div className={classes.dropRoot}>
-                    {/* <CommentForm formType='comment'/>
-                    <CommentForm formType='description'/> */}
-                    <SearchField search={searchResource}
-                                setSearchState={setSearching}
-                                searchState={searching}
-                                setResult={setSearchResult}/>
-
-                    {!searching &&
-                        <div className={classes.dropBoxContainer}>
-                            <ResourceBox 
-                                        resourcesType='Images' 
-                                        resources={['image1', 'image2', 'image3',
-                                                    'image4', 'image5', 'image6',
-                                                    'image7', 'image8', 'image9']}/>
-                            <ResourceBox resourcesType='Videos' resources={['video1', 'video2', 'video3']}/>
-                            <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3',
-                                                                            'recent4', 'recent5', 'recent6',
-                                                                            'recent7', 'recent8', 'recent9']}/>
-                        </div>
-                        || <div className={classes.searchResultContainer}>
-                                <div className={classes.searchResult}>{searchResult}</div>
+    return (
+        <> 
+            {
+                open && 
+                <div className={classes.dropContainer}>
+                    <div className={classes.dropRoot}>
+                        <SearchField 
+                            search={searchResource}
+                            setSearchState={setSearching}
+                            searchState={searching}
+                            setResult={setSearchResult}/>
+                        {
+                            !searching &&
+                            <div className={classes.dropBoxContainer}>
+                                <ResourceBox 
+                                    resourcesType='Images' 
+                                    resources={resources.images}/>
+                            </div>
+                            || 
+                            <div className={classes.searchResultContainer}>
+                                <div className={classes.searchResult}>
+                                    {searchResult}
+                                </div>
                             </div>}
+                    </div>
                 </div>
-        </div>} 
-        <Button className={classes.closeDropButton} onClick={()=>setOpen(!open)}>
-                    <Icon
-                        name="Close Drop"
-                        path={open ? mdiChevronLeft:mdiChevronRight}
-                        size={1}
-                    />
-        </Button>
+            } 
+            <Button 
+                className={classes.closeDropButton}
+                onClick={()=>setOpen(!open)}
+            >
+                <Icon
+                    name="Close Drop"
+                    path={open ? mdiChevronLeft:mdiChevronRight}
+                    size={1}
+                />
+            </Button>
         </>
+        )
 }

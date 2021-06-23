@@ -50,68 +50,32 @@ const useStyles = makeStyles({
     }
 });
 
-const chargeElements = (list) => {
-    let newList = [];
-    let i = 0;
-    let p = true;
-    while(i < list.length){
-        const p = list[i];
-        newList.push({src: p, prev: i-1, next: i+1});
-        i++;
-    };
-    newList[0].prev = list.length - 1;
-    newList[newList.length-1].next = 0;
-    return newList;
-}
-
 export default function ResourceBox(props) {
-
     const { resourcesType, resources } = props;
     const classes = useStyles();
-    const linkedElements = chargeElements(resources);
-
     const [expandContainer, setExpand] = useState({expanded: false, 
                                                     class: classes.resourcesContainer});
 
-    const elementsShowing = (list, option) => {
-        if (option == 0) {
-            const maxShow = expandContainer.expanded == 1 ? list.length : 3;
-            return list.filter((item, idx) => idx < maxShow);
-        }
-        if (option == 1) {
-            const nextIndex = showing.map(item => item.next);
-            let newList = [];
-            for (let i = 0; i<nextIndex.length; i++) {
-                newList.push(list[nextIndex[i]]);
-            }
-            return newList;
-        }
-        if (option == -1) {
-            const prevIndex = showing.map(item => item.prev);
-            let newList = [];
-            for (let i = 0; i<prevIndex.length; i++) {
-                newList.push(list[prevIndex[i]]);
-            }
-            return newList;
-        }
+    const elementsShowing = (list) => {
+        const maxShow = expandContainer.expanded ? list.length : 3;
+        let newArr = [];
+        list.forEach((item, index) => {
+            if (index < maxShow) {
+                newArr.push({ ...item, index });
+            } 
+        })
+        return newArr;
     }
 
-    const showElements = elementsShowing(linkedElements, 0);
+    const [elements, setElements] = useState(resources);
+
+    const showElements = elementsShowing(resources);
 
     const [showing, setShowing] = useState(showElements);
+
     useEffect(() => {
         setShowing(showElements);
     }, [expandContainer]);
-
-    const handleNext = () => {
-        const show = elementsShowing(linkedElements, 1);
-        setShowing(show);
-    }
-
-    const handlePrev = () => {
-        const show = elementsShowing(linkedElements, -1);
-        setShowing(show);
-    }
 
     const handleExpandBox = () => {
         if (resources.length > 3) {
@@ -122,38 +86,74 @@ export default function ResourceBox(props) {
         }
     }
 
-    return <div className={classes.boxRoot}>
-        <div className={classes.title} onClick={handleExpandBox}>
-            <Typography className={classes.titleText} variant='subtitle1'>
-                {resourcesType}
-            </Typography>
-            <Icon path={expandContainer.expanded ? mdiChevronUp : mdiChevronDown}
-                title="Expand List"
-                size={1}
-            />
-        </div>
-        <div className={classes.resourceDrop}>
-            <Button className={classes.slideButton} onClick={handlePrev}>
-                <Icon
-                    path={mdiChevronLeft}
-                    title="Prev Element"
+    const handleNext = () => {
+        const showingIndex = [];
+        showing.forEach(item => {
+            if (item.index >= elements.length-1) {
+                showingIndex.push(0);
+            } else {
+                showingIndex.push(item.index + 1);
+            };
+        });
+        const newArr = [];
+        showingIndex.forEach(index => {
+            newArr.push({ ...elements[index], index });
+        });
+        setShowing(newArr);
+    }
+
+    const handlePrev = () => {
+        const showingIndex = [];
+        showing.forEach(item => {
+            if (item.index <= 0) {
+                showingIndex.push(elements.length-1);
+            } else {
+                showingIndex.push(item.index - 1);
+            };
+        });
+        const newArr = [];
+        showingIndex.forEach(index => {
+            newArr.push({ ...elements[index], index });
+        });
+        setShowing(newArr);
+    }
+
+    return (
+        <div className={classes.boxRoot}>
+            <div 
+                className={classes.title} 
+                onClick={handleExpandBox}>
+                <Typography className={classes.titleText} variant='subtitle1'>
+                    {resourcesType}
+                </Typography>
+                <Icon path={expandContainer.expanded ? mdiChevronUp : mdiChevronDown}
+                    title="Expand List"
                     size={1}
                 />
-            </Button>
-            <div className={expandContainer.class}>
-                {
-                    showing.map( (element) => {
-                        return <ResourceElement {...element} />
-                    })
-                }
             </div>
-            <Button className={classes.slideButton} onClick={handleNext}>
-                <Icon
-                    path={mdiChevronRight}
-                    title="Next Element"
-                    size={1}
-                />
-            </Button>
+            <div className={classes.resourceDrop}>
+                <Button className={classes.slideButton} onClick={handlePrev}>
+                    <Icon
+                        path={mdiChevronLeft}
+                        title="Prev Element"
+                        size={1}
+                    />
+                </Button>
+                <div className={expandContainer.class}>
+                    {
+                        showing.map( (element) => {
+                            return <ResourceElement {...element} />
+                        })
+                    }
+                </div>
+                <Button className={classes.slideButton} onClick={handleNext}>
+                    <Icon
+                        path={mdiChevronRight}
+                        title="Next Element"
+                        size={1}
+                    />
+                </Button>
+            </div>
         </div>
-    </div>
+    )
 };
