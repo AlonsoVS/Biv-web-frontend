@@ -1,10 +1,9 @@
-import { Button, makeStyles, Typography } from "@material-ui/core"
-import CommentForm from "./CommentForm"
+import { Button, makeStyles } from "@material-ui/core"
 import SearchField from "../components/SearchField"
 import ResourceBox from "./ResourceBox"
 import Icon from '@mdi/react'
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const useStyles = makeStyles({
     dropContainer:{
@@ -66,7 +65,13 @@ const useStyles = makeStyles({
 });
 
 export default function LeftDrop(props) {
-    let { resources } = props;
+    const resources = {
+        images: [{ name: 'Main Image', type: 'image', src: '/mainImage.jpg' },
+                { name: 'Second Image', type: 'image', src: '/secondImage.jpg' },
+                { name: 'Third Image', type: 'image', src: '/thirdImage.jpg' },
+                { name: 'Fourth Image', type: 'image', src: '/fourthImage.jpg' }],
+        text: [{ name: 'title', type: 'text', src: 'Title Text' }]
+    };
     const [open, setOpen] = useState(true);
     const classes = useStyles();
 

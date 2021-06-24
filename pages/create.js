@@ -3,12 +3,7 @@ import BookPage from "../components/BookPage"
 import LeftDrop from "../components/LeftDrop"
 import CreateNavbar from "../components/CreateNavbar"
 import AddModal from "../components/AddModal";
-import { useState } from "react";
-
-import { IconButton } from "@material-ui/core";
-import { mdiPlusCircleOutline } from "@mdi/js/commonjs/mdi";
-import Icon from '@mdi/react';
-import Image from "next/image";
+import React, { useState } from "react";
 
 const useStyles = makeStyles({
     rootContainer: {
@@ -32,23 +27,16 @@ const useStyles = makeStyles({
     }
 });
 
+export const CreateDesignContext = React.createContext(null);
+
 export default function Create() {
     const classes = useStyles();
-    const image1 = '/mainImage.jpg';
-    const image2 = '/netherlands.jpg';
-    const res = {
-                images: [{ name: 'Main Image', type: 'image', src: '/mainImage.jpg' },
-                        { name: 'Second Image', type: 'image', src: '/secondImage.jpg' },
-                        { name: 'Third Image', type: 'image', src: '/thirdImage.jpg' },
-                        { name: 'Fourth Image', type: 'image', src: '/fourthImage.jpg' }],
-                text: [{ name: 'title', type: 'text', src: 'Title Text' }]
-            }
     const template = {};
 
+    const [tempResAdded, setTempResAdded] = useState(null);
 
-    const addResource = (data) => {
-        const resource = { name: data.src, type: data.type, src: data.src }
-        res.push(resource);
+    const addResource = (resource) => {
+        setTempResAdded(resource);
     }
 
     return (
@@ -59,16 +47,18 @@ export default function Create() {
                 display: 'flex',
                 flexDirection: 'column',
                 overflow: 'hidden'
-                }}
+            }}
             >
-                <CreateNavbar/>
-                <div className={classes.rootContainer}>
-                    <LeftDrop addResource={addResource} resources={res} />
-                    <div className={classes.pageContainer}>
-                        <BookPage resources={res} />
+                <CreateDesignContext.Provider value={{ tempResAdded, addResource }}>
+                    <CreateNavbar/>
+                    <div className={classes.rootContainer}>
+                        <LeftDrop />
+                        <div className={classes.pageContainer}>
+                            <BookPage />
+                        </div>
+                        <AddModal/>
                     </div>
-                    <AddModal/>
-                </div>
+                </CreateDesignContext.Provider>
         </div>
     )
 }

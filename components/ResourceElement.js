@@ -1,4 +1,6 @@
-import { makeStyles } from "@material-ui/core"
+import { Button, makeStyles } from "@material-ui/core"
+import { useContext } from "react";
+import { CreateDesignContext } from "../pages/create";
 
 
 const useStyles = makeStyles({
@@ -12,8 +14,15 @@ const useStyles = makeStyles({
 
 function ResourceElement(props) {
     const classes = useStyles();
+    const {addResource} = useContext(CreateDesignContext);
+
     return (
-        <div id={props.src} className={classes.resourceElement}>{props.src}</div>
+        <div id={props.src} className={classes.resourceElement}>
+            {props.src}
+            <Button onClick={() => addResource(props)}>
+                Add {'>'}
+            </Button>
+        </div>
     )
 }
 

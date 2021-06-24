@@ -142,7 +142,8 @@ export default function ResourceBox(props) {
                 <div className={expandContainer.class}>
                     {
                         showing.map( (element) => {
-                            return <ResourceElement {...element} />
+                            const formatElement = elements[element.index];
+                            return <ResourceElement {...formatElement} />
                         })
                     }
                 </div>

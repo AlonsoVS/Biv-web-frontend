@@ -1,5 +1,6 @@
-import { Button, makeStyles } from "@material-ui/core";
-import Image from "next/image";
+import { makeStyles } from "@material-ui/core";
+import { useContext, useEffect, useState } from "react";
+import { CreateDesignContext } from "../pages/create";
 import Template from "./Template";
 
 const useStyles = makeStyles({
@@ -23,41 +24,55 @@ const useStyles = makeStyles({
 
 
 export default function BookPage(props) {
-    const { resources } = props;
     const classes = useStyles();
+    const { tempResAdded } = useContext(CreateDesignContext);
 
-    const handleCommentChange = (e) => {
-        console.log("Comment Change! This is that comment says => ", e.target.value);
-        e.preventDefault();
-    }
+    const [resources, setResources] = useState({
+        image: [{ name: 'Main Image', type: 'image', src: '/mainImage.jpg' },
+                { name: 'Second Image', type: 'image', src: '/secondImage.jpg' },
+                { name: 'Third Image', type: 'image', src: '/thirdImage.jpg' },
+                { name: 'Fourth Image', type: 'image', src: '/fourthImage.jpg' }],
+        text: [{ name: 'title', type: 'text', src: 'Title Text' }]
+    });
+
+    useEffect(() => {
+        if (tempResAdded) {
+            const res = resources[tempResAdded.type];
+            res.push(tempResAdded);
+            setResources({[tempResAdded.type]: res, ...resources});
+        }
+    }, [tempResAdded]);
+
+    const images = resources.image;
+    const text = resources.text;
 
     const currentTemplate = {
         id: '0000001',
         struct: [
             {
-                name: 'Main Image',
-                type: 'image',
-                src: '/mainImage.jpg',
+                name: images[0].name,
+                type: images[0].type,
+                src: images[0].src,
                 style: {
                     width: 300,
                     height: 300
                 },
                 position: {
-                    y: 10,
-                    x: 10
+                    y: 100,
+                    x: 100
                 }
             },
             {
-                name: 'title',
-                type: 'text',
-                src: 'Title Text',
+                name: text[0].name,
+                type: text[0].type,
+                src: text[0].src,
                 style: {
                     width: 'fit-content',
                     height: '10px',
                 },
                 position: {
-                    y: 200,
-                    x: 60
+                    y: 20,
+                    x: 100
                 }
             }
             

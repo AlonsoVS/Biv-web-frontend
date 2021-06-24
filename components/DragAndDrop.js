@@ -3,9 +3,11 @@ import { useState } from "react";
 
 export default function DragAndDrop(props) {
 
+    const {position} = props;
+
     const [focused, setFocused] = useState(false);
 
-    const [newPosition, setNewPosition] = useState({ x: props.position.x, y: props.position.y });
+    const [newPosition, setNewPosition] = useState({ x: position.x, y: position.y });
 
     const onMouseMove = (event) => {
         if (focused) {
