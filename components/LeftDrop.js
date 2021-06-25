@@ -70,7 +70,8 @@ export default function LeftDrop(props) {
                 { name: 'Second Image', type: 'image', src: '/secondImage.jpg' },
                 { name: 'Third Image', type: 'image', src: '/thirdImage.jpg' },
                 { name: 'Fourth Image', type: 'image', src: '/fourthImage.jpg' }],
-        text: [{ name: 'title', type: 'text', src: 'Title Text' }]
+        text: [{ name: 'title', type: 'text', src: 'Title Text' },
+                { name: 'subtitle', type: 'text', src: 'Subtitle Text' }]
     };
     const [open, setOpen] = useState(true);
     const classes = useStyles();
@@ -105,9 +106,13 @@ export default function LeftDrop(props) {
                         {
                             !searching &&
                             <div className={classes.dropBoxContainer}>
-                                <ResourceBox 
-                                    resourcesType='Images' 
-                                    resources={resources.images}/>
+                                {
+                                    Object.keys(resources).map(type => 
+                                        <ResourceBox 
+                                            resourcesType={type} 
+                                            resources={resources[type]}/>
+                                    )
+                                }
                             </div>
                             || 
                             <div className={classes.searchResultContainer}>

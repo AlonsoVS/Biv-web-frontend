@@ -16,7 +16,8 @@ const useStyles = makeStyles({
         margin: 10
     },
     titleText: {
-        marginRight: '6px'
+        marginRight: '6px',
+        textTransform: 'capitalize'
     },
     slideButton: {
         minWidth: '0px',
