@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
-import { CreateDesignContext } from "../pages/create";
-import Template, { createTemplate, editTemplate } from "./Template";
+import { useState } from "react";
+import Template from "./Template";
 
 const useStyles = makeStyles({
     page:{
@@ -25,15 +24,15 @@ const useStyles = makeStyles({
 
 export default function BookPage(props) {
     const classes = useStyles();
-    const [templateId, setTemplateId] = useState(null);
+    const [templateId, setTemplateId] = useState("00002");
 
-    const createTemplateCallback = (templateId) => {
+    const onSaveCallback = (templateId) => {
         setTemplateId(() => templateId);
     }
     
     return <div className={classes.page}>
             <div className={classes.template}>
-                <Template templateId={templateId} createCallback={createTemplateCallback} />
+                <Template templateId={templateId} onSaveCallback={onSaveCallback} />
             </div> 
     </div>
 }

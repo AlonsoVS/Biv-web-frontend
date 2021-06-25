@@ -34,17 +34,20 @@ const useTemplate = (template, resources) => {
 }
 
 export default function Template(props) {
-    const { templateId, createCallback } = props;
+    const { templateId, createCallback: onSaveCallback } = props;
 
     const [template, setTemplate] = useState(() => {
-        let newTemplate = createTemplate();
-        if (templateId) {
-            /* Here the database template should be loaded with templateId */
-            newTemplate = {...newTemplate, id: templateId}
-        }
-        createCallback(newTemplate.id);
-        return newTemplate;
+        let template = createTemplate();
+        if (templateId) template = {...template, id: templateId};
+        return template;
     });
+
+    useEffect(() => {
+        if (templateId && templateId !== template.id) {
+            /* Here the database template should be loaded with templateId */
+           setTemplate(() => ({...template, id: templateId}));
+        }
+    }, [templateId]);
 
     const addResource = (resource) => {
         const structure = template.struct;
@@ -54,6 +57,10 @@ export default function Template(props) {
                 position: { y: 300,x: 300 },
             });
         setTemplate(() => ({...template, struct: structure}));
+    }
+
+    const onSave = () => {
+        if (!templateId) onSaveCallback(template.id);
     }
 
     const { tempResAdded } = useContext(CreateDesignContext);
