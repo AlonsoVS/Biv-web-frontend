@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { CreateDesignContext } from "../pages/create";
-import Template, { createTemplate } from "./Template";
+import Template, { createTemplate, editTemplate } from "./Template";
 
 const useStyles = makeStyles({
     page:{
@@ -28,11 +28,11 @@ export default function BookPage(props) {
     const { tempResAdded } = useContext(CreateDesignContext);
 
     const [resources, setResources] = useState([
-        { name: 'Main Image', type: 'image', src: '/mainImage.jpg' },
+        /* { name: 'Main Image', type: 'image', src: '/mainImage.jpg' },
         { name: 'Second Image', type: 'image', src: '/secondImage.jpg' },
         { name: 'Third Image', type: 'image', src: '/thirdImage.jpg' },
         { name: 'Fourth Image', type: 'image', src: '/fourthImage.jpg' },
-        { name: 'Title', type: 'text', src: 'Title Text' }
+        { name: 'Title', type: 'text', src: 'Title Text' } */
     ]);
 
     const [currentTemplate, setCurrentTemplate] = useState(() => createTemplate(resources));
@@ -44,7 +44,16 @@ export default function BookPage(props) {
                 newRes.push(tempResAdded)
                 return newRes;
             });
-            setCurrentTemplate(() => createTemplate(resources));
+
+            const structure = currentTemplate.struct;
+            structure.push({
+                ...tempResAdded,
+                style: { width: 300, height: 300 },
+                position: { y: 300,x: 300 },
+                src: '/defoultResource.jpg'
+            });
+
+            setCurrentTemplate(() => editTemplate(currentTemplate, structure));
         }
     }, [tempResAdded]);
     

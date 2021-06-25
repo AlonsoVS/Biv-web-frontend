@@ -20,6 +20,11 @@ export function createTemplate(elements) {
     return newTemplate;
 }
 
+export function editTemplate(template, structure) {
+
+    return Object.create({struct: structure, ...template});
+}
+
 
 function Template(props) {
     return (
