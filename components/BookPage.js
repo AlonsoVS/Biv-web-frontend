@@ -25,41 +25,15 @@ const useStyles = makeStyles({
 
 export default function BookPage(props) {
     const classes = useStyles();
-    const { tempResAdded } = useContext(CreateDesignContext);
+    const [templateId, setTemplateId] = useState(null);
 
-    const [resources, setResources] = useState([
-        /* { name: 'Main Image', type: 'image', src: '/mainImage.jpg' },
-        { name: 'Second Image', type: 'image', src: '/secondImage.jpg' },
-        { name: 'Third Image', type: 'image', src: '/thirdImage.jpg' },
-        { name: 'Fourth Image', type: 'image', src: '/fourthImage.jpg' },
-        { name: 'Title', type: 'text', src: 'Title Text' } */
-    ]);
-
-    const [currentTemplate, setCurrentTemplate] = useState(() => createTemplate());
-
-    useEffect(() => {
-        if (tempResAdded) {
-            setResources(() => {
-                let newRes = resources;
-                newRes.push(tempResAdded)
-                return newRes;
-            });
-
-            const structure = currentTemplate.struct;
-            structure.push({
-                ...tempResAdded,
-                style: { width: 300, height: 300 },
-                position: { y: 300,x: 300 },
-                src: '/defoultResource.jpg'
-            });
-
-            setCurrentTemplate(() => editTemplate(currentTemplate, structure));
-        }
-    }, [tempResAdded]);
+    const createTemplateCallback = (templateId) => {
+        setTemplateId(() => templateId);
+    }
     
     return <div className={classes.page}>
             <div className={classes.template}>
-                <Template template={currentTemplate} resources={resources} />
+                <Template templateId={templateId} createCallback={createTemplateCallback} />
             </div> 
     </div>
 }

@@ -1,19 +1,20 @@
 import TemplateElement from "./TemplateElement";
 import DragAndDrop from "./DragAndDrop";
+import { useContext, useEffect, useState } from "react";
+import { CreateDesignContext } from "../pages/create";
 
-export function createTemplate() {
+const createTemplate = () => {
     return {
         id: '00000001',
         struct: []
     };;
 }
 
-export function editTemplate(template, structure) {
-
+const editTemplate = (template, structure) => {
     return Object.create({struct: structure, ...template});
 }
 
-function useTemplate(template, resources) {
+const useTemplate = (template, resources) => {
     const formatStruct = [];
 
     template.struct.map(element => {
@@ -32,11 +33,37 @@ function useTemplate(template, resources) {
     return {...template, struct: formatStruct};
 }
 
-function Template(props) {
-    const { template, resources } = props;
-    const formatTemplate = useTemplate(template, resources);
+export default function Template(props) {
+    const { templateId, createCallback } = props;
+
+    const [template, setTemplate] = useState(() => {
+        let newTemplate = createTemplate();
+        if (templateId) {
+            /* Here the database template should be loaded with templateId */
+            newTemplate = {...newTemplate, id: templateId}
+        }
+        createCallback(newTemplate.id);
+        return newTemplate;
+    });
+
+    const addResource = (resource) => {
+        const structure = template.struct;
+            structure.push({
+                ...resource,
+                style: { width: 300, height: 300 },
+                position: { y: 300,x: 300 },
+            });
+        setTemplate(() => ({...template, struct: structure}));
+    }
+
+    const { tempResAdded } = useContext(CreateDesignContext);
+
+    useEffect(() => {
+        if (tempResAdded) addResource(tempResAdded);
+    }, [tempResAdded]);
+
     return (
-        formatTemplate.struct.map(element => 
+        template.struct.map(element => 
             {   
                 return (
                     <div id={element.name}>
@@ -50,5 +77,3 @@ function Template(props) {
     )
     );
 }
-
-export default Template;
