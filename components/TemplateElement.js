@@ -19,13 +19,13 @@ function TemplateElement(props) {
             ref={ref}
         >
             {
-                props.type === 'image'?
+                props.type === 'image' ?
                     <Image 
                         alt={elementProps.name}
                         src={elementProps.src}
                         layout='fill'
-                        objectFit='fill'/> :
-                    
+                        objectFit='fill'/> 
+                    :
                     <p>{elementProps.src}</p>
             }
         </div>  
