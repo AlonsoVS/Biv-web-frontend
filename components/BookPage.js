@@ -35,7 +35,7 @@ export default function BookPage(props) {
         { name: 'Title', type: 'text', src: 'Title Text' } */
     ]);
 
-    const [currentTemplate, setCurrentTemplate] = useState(() => createTemplate(resources));
+    const [currentTemplate, setCurrentTemplate] = useState(() => createTemplate());
 
     useEffect(() => {
         if (tempResAdded) {
@@ -59,7 +59,7 @@ export default function BookPage(props) {
     
     return <div className={classes.page}>
             <div className={classes.template}>
-                <Template template={currentTemplate} />
+                <Template template={currentTemplate} resources={resources} />
             </div> 
     </div>
 }
