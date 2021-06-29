@@ -1,10 +1,9 @@
-import { Button, makeStyles, Typography } from "@material-ui/core"
-import CommentForm from "./CommentForm"
+import { Button, makeStyles } from "@material-ui/core"
 import SearchField from "../components/SearchField"
 import ResourceBox from "./ResourceBox"
 import Icon from '@mdi/react'
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const useStyles = makeStyles({
     dropContainer:{
@@ -66,14 +65,14 @@ const useStyles = makeStyles({
 });
 
 export default function LeftDrop(props) {
-    let { resources } = props;
-    resources = {images: ['image1', 'image2', 'image3',
-                        'image4', 'image5', 'image6',
-                        'image7', 'image8', 'image9'],
-                videos:  ['video1', 'video2', 'video3'],
-                recents: ['recent1', 'recent2', 'recent3',
-                        'recent4', 'recent5', 'recent6',
-                        'recent7', 'recent8', 'recent9']}
+    const resources = {
+        images: [{ name: 'Main Image', type: 'image', src: '/mainImage.jpg' },
+                { name: 'Second Image', type: 'image', src: '/secondImage.jpg' },
+                { name: 'Third Image', type: 'image', src: '/thirdImage.jpg' },
+                { name: 'Fourth Image', type: 'image', src: '/fourthImage.jpg' }],
+        text: [{ name: 'title', type: 'text', src: 'Title Text' },
+                { name: 'subtitle', type: 'text', src: 'Subtitle Text' }]
+    };
     const [open, setOpen] = useState(true);
     const classes = useStyles();
 
@@ -93,38 +92,47 @@ export default function LeftDrop(props) {
         return found;
     }
 
-    return <> {open && <div className={classes.dropContainer}>
-                <div className={classes.dropRoot}>
-                    {/* <CommentForm formType='comment'/>
-                    <CommentForm formType='description'/> */}
-                    <SearchField search={searchResource}
-                                setSearchState={setSearching}
-                                searchState={searching}
-                                setResult={setSearchResult}/>
-
-                    {!searching &&
-                        <div className={classes.dropBoxContainer}>
-                            <ResourceBox 
-                                        resourcesType='Images' 
-                                        resources={['image1', 'image2', 'image3',
-                                                    'image4', 'image5', 'image6',
-                                                    'image7', 'image8', 'image9']}/>
-                            <ResourceBox resourcesType='Videos' resources={['video1', 'video2', 'video3']}/>
-                            <ResourceBox resourcesType='Recent' resources={['recent1', 'recent2', 'recent3',
-                                                                            'recent4', 'recent5', 'recent6',
-                                                                            'recent7', 'recent8', 'recent9']}/>
-                        </div>
-                        || <div className={classes.searchResultContainer}>
-                                <div className={classes.searchResult}>{searchResult}</div>
+    return (
+        <> 
+            {
+                open && 
+                <div className={classes.dropContainer}>
+                    <div className={classes.dropRoot}>
+                        <SearchField 
+                            search={searchResource}
+                            setSearchState={setSearching}
+                            searchState={searching}
+                            setResult={setSearchResult}/>
+                        {
+                            !searching &&
+                            <div className={classes.dropBoxContainer}>
+                                {
+                                    Object.keys(resources).map(type => 
+                                        <ResourceBox 
+                                            resourcesType={type} 
+                                            resources={resources[type]}/>
+                                    )
+                                }
+                            </div>
+                            || 
+                            <div className={classes.searchResultContainer}>
+                                <div className={classes.searchResult}>
+                                    {searchResult}
+                                </div>
                             </div>}
+                    </div>
                 </div>
-        </div>} 
-        <Button className={classes.closeDropButton} onClick={()=>setOpen(!open)}>
-                    <Icon
-                        name="Close Drop"
-                        path={open ? mdiChevronLeft:mdiChevronRight}
-                        size={1}
-                    />
-        </Button>
+            } 
+            <Button 
+                className={classes.closeDropButton}
+                onClick={()=>setOpen(!open)}
+            >
+                <Icon
+                    name="Close Drop"
+                    path={open ? mdiChevronLeft:mdiChevronRight}
+                    size={1}
+                />
+            </Button>
         </>
+        )
 }

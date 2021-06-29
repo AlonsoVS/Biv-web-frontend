@@ -1,4 +1,6 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { useState } from "react";
+import Template from "./Template";
 
 const useStyles = makeStyles({
     page:{
@@ -11,17 +13,25 @@ const useStyles = makeStyles({
         alignSelf: 'center',
         alignItems: 'center'
     },
-    resource: {
-        fontSize: 'large',
-        width: 'fitContent',
-        height: 'fitContent'
+    template: {
+        width: '100%',
+        height: '100%',
+        background: 'rgba(250, 231, 204, 0.33)',
+        position: 'absolute'
     }
 });
 
 export default function BookPage(props) {
-    const { resources } = props;
     const classes = useStyles();
+    const [templateId, setTemplateId] = useState(null);
+
+    const onSaveCallback = (templateId) => {
+        setTemplateId(() => templateId);
+    }
+    
     return <div className={classes.page}>
-        {resources.map( resource => <div className={classes.resource}>{resource}</div> )}
+            <div className={classes.template}>
+                <Template templateId={templateId} onSaveCallback={onSaveCallback} />
+            </div> 
     </div>
 }
