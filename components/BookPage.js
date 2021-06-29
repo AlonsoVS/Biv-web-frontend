@@ -21,10 +21,9 @@ const useStyles = makeStyles({
     }
 });
 
-
 export default function BookPage(props) {
     const classes = useStyles();
-    const [templateId, setTemplateId] = useState("00002");
+    const [templateId, setTemplateId] = useState(null);
 
     const onSaveCallback = (templateId) => {
         setTemplateId(() => templateId);

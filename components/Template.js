@@ -34,7 +34,7 @@ const useTemplate = (template, resources) => {
 }
 
 export default function Template(props) {
-    const { templateId, createCallback: onSaveCallback } = props;
+    const { templateId, onSaveCallback } = props;
 
     const [template, setTemplate] = useState(() => {
         let template = createTemplate();

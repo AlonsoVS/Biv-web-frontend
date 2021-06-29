@@ -6,7 +6,14 @@ import AddModal from "../components/AddModal";
 import React, { useState } from "react";
 
 const useStyles = makeStyles({
-    rootContainer: {
+    root: { 
+        height: '100vh',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+    },
+    createContainer: {
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -31,27 +38,20 @@ export const CreateDesignContext = React.createContext(null);
 
 export default function Create() {
     const classes = useStyles();
-    const template = {};
 
     const [tempResAdded, setTempResAdded] = useState(null);
 
     const addResource = (resource) => {
-        setTempResAdded(resource);
+        setTempResAdded(() => resource);
     }
 
     return (
         <div
-            style={{ 
-                height: '100vh',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden'
-            }}
+            className={classes.root}
             >
                 <CreateDesignContext.Provider value={{ tempResAdded, addResource }}>
                     <CreateNavbar/>
-                    <div className={classes.rootContainer}>
+                    <div className={classes.createContainer}>
                         <LeftDrop />
                         <div className={classes.pageContainer}>
                             <BookPage />
