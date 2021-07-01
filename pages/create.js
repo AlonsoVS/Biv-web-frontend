@@ -40,32 +40,29 @@ export const CreateDesignContext = React.createContext(null);
 export default function Create() {
     const classes = useStyles();
 
+    const url = 'http://localhost:8080/biv/api/books';
+
     const [tempResAdded, setTempResAdded] = useState(null);
 
     const addResource = (resource) => {
         setTempResAdded(() => resource);
     }
 
-    const apiRequest = () => {
-        return new Promise( resolve => {
-            // Here the bookId should be saved in database
-            setTimeout(() => {
-                console.log("BookId Saved!");
-            }, 2000);
-        });
+    const saveBook = () => {
+        return axios.post(`${url}/save`, book);
     }
 
-    const [pages, setPages] = useState([]);
+    const [book, setBook] = useState(() => null);
 
     const chargeBook = async (id) => {
-        const response = await axios.get(`http://localhost:8080/biv/api/books/id/${id}`);
-        setPages(() => response.data.pages);
+        const response = await axios.get(`${url}/id/${id}`);
+        setBook(() => response.data);
     }
 
-    const [bookId, setBookId] = useState(2222);
+    const [bookId, setBookId] = useState(null);
 
     useEffect(() => {
-        chargeBook(bookId);
+        if (bookId) chargeBook(bookId);
     }, [bookId]);
 
     const [saveQueue, addToSaveQueue] = useState([]);
@@ -89,7 +86,7 @@ export default function Create() {
 
     useEffect(() => {
         if (saveState) {
-            addToSave(apiRequest());
+            addToSave(saveBook());
             restartSaveState();
         }
     }, [saveState]);
@@ -113,7 +110,12 @@ export default function Create() {
                     <div className={classes.createContainer}>
                         <LeftDrop />
                         <div className={classes.pageContainer}>
-                            {pages.map(page => <BookPage pageNumber={page.num} templateId={page.templateId} />)}
+                            {
+                            book 
+                                && 
+                            book.pages.map(page => 
+                                            <BookPage pageNumber={page.num} templateId={page.templateId} />)
+                            }
                         </div>
                         <AddModal/>
                     </div>

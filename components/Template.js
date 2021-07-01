@@ -35,7 +35,9 @@ const useTemplate = (template, resources) => {
 }
 
 export default function Template(props) {
-    const { templateId, onSaveCallback } = props;
+    const { templateId, onSaveCallback, pageId } = props;
+
+    const url = 'http://localhost:8080/biv/api/templates';
 
     const [template, setTemplate] = useState(() => {
         if (templateId) return null;
@@ -43,7 +45,7 @@ export default function Template(props) {
     });
 
     const chargeTemplate = async (id) => {
-        const response = await axios.get(`http://localhost:8080/biv/api/templates/id/${id}`);
+        const response = await axios.get(`${url}/id/${id}`);
         return response.data;
     }
 
@@ -68,17 +70,12 @@ export default function Template(props) {
         if (tempResAdded) addResource(tempResAdded);
     }, [tempResAdded]);
 
-    const apiRequest = () => {
-        return new Promise((resolve) => {
-            // Here the template should be saved in database
-            setTimeout(() => {
-                console.log("Template Saved!");
-            }, 2000);
-        });
+    const saveTemplate = () => {
+        return axios.post(`${url}/save`, template);
     }
 
     const onSave = () => {
-        addToSave(apiRequest());
+        addToSave(saveTemplate());
         if (!templateId) onSaveCallback(template.id);
     }
 
