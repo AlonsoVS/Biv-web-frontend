@@ -2,6 +2,7 @@ import TemplateElement from "./TemplateElement";
 import DragAndDrop from "./DragAndDrop";
 import { useContext, useEffect, useState } from "react";
 import { CreateDesignContext } from "../pages/create";
+import axios from "axios";
 
 const createTemplate = () => {
     return {
@@ -37,16 +38,18 @@ export default function Template(props) {
     const { templateId, onSaveCallback } = props;
 
     const [template, setTemplate] = useState(() => {
-        let template = createTemplate();
-        if (templateId) template = {...template, id: templateId};
-        return template;
+        if (templateId) return null;
+        return createTemplate();
     });
 
-    useEffect(() => {
-        if (templateId && templateId !== template.id) {
-            /* Here the database template should be loaded with templateId */
-           setTemplate(() => ({...template, id: templateId}));
-        }
+    const chargeTemplate = async (id) => {
+        const response = await axios.get(`http://localhost:8080/biv/api/templates/id/${id}`);
+        return response.data;
+    }
+
+    useEffect(async () => {
+        const currentTemplate = await chargeTemplate(templateId);
+        setTemplate(() => currentTemplate);
     }, [templateId]);
 
     const addResource = (resource) => {
@@ -59,18 +62,32 @@ export default function Template(props) {
         setTemplate(() => ({...template, struct: structure}));
     }
 
-    const onSave = () => {
-        if (!templateId) onSaveCallback(template.id);
-    }
-
-    const { tempResAdded } = useContext(CreateDesignContext);
+    const { tempResAdded, saveState, addToSave } = useContext(CreateDesignContext);
 
     useEffect(() => {
         if (tempResAdded) addResource(tempResAdded);
     }, [tempResAdded]);
 
-    return (
-        template.struct.map(element => 
+    const apiRequest = () => {
+        return new Promise((resolve) => {
+            // Here the template should be saved in database
+            setTimeout(() => {
+                console.log("Template Saved!");
+            }, 2000);
+        });
+    }
+
+    const onSave = () => {
+        addToSave(apiRequest());
+        if (!templateId) onSaveCallback(template.id);
+    }
+
+    useEffect(() => {
+        if (saveState) onSave();
+    }, [saveState]);
+
+    return (<>
+        {template && template.struct.map(element => 
             {   
                 return (
                     <div id={element.name}>
@@ -81,6 +98,6 @@ export default function Template(props) {
                     
                 )
             }
-    )
-    );
+    )}
+    </>);
 }

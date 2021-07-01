@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CreateDesignContext } from "../pages/create";
 import Template from "./Template";
 
 const useStyles = makeStyles({
@@ -22,12 +23,27 @@ const useStyles = makeStyles({
 });
 
 export default function BookPage(props) {
+    const { saveState, addToSave } = useContext(CreateDesignContext);
     const classes = useStyles();
-    const [templateId, setTemplateId] = useState(null);
+    const [templateId, setTemplateId] = useState(props.templateId);
+    const [pageNumber, setPageNumber] = useState(props.pageNumber);
 
     const onSaveCallback = (templateId) => {
         setTemplateId(() => templateId);
     }
+
+    const apiRequest = () => {
+        return new Promise((resolve) => {
+            // Here the templateId should be saved in database
+            setTimeout(() => {
+                console.log("BookPage Saved!");
+            }, 2000);
+        });
+    }
+
+    useEffect(() => {
+        if (saveState) addToSave(apiRequest());
+    }, [templateId]);
     
     return <div className={classes.page}>
             <div className={classes.template}>

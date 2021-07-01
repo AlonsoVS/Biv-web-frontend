@@ -7,7 +7,8 @@ import Link from 'next/link'
 import { mdiArrowLeft } from '@mdi/js/commonjs/mdi'
 import { useState } from 'react'
 
-export default function CreateNavbar() {
+export default function CreateNavbar(props) {
+    const { handleSave } = props;
 
     const [travelTitle, setTravelTitle] = useState('');
 
@@ -100,7 +101,10 @@ export default function CreateNavbar() {
                         />
                     </IconButton>
 
-                    <IconButton className={classes.customUserIcons} aria-label="Save-button"
+                    <IconButton 
+                        className={classes.customUserIcons}
+                        aria-label="Save-button"
+                        onClick={handleSave}
                     >
                         <Icon 
                             path={mdiContentSave}

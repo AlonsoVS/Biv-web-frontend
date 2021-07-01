@@ -3,7 +3,8 @@ import BookPage from "../components/BookPage"
 import LeftDrop from "../components/LeftDrop"
 import CreateNavbar from "../components/CreateNavbar"
 import AddModal from "../components/AddModal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles({
     root: { 
@@ -45,16 +46,74 @@ export default function Create() {
         setTempResAdded(() => resource);
     }
 
+    const apiRequest = () => {
+        return new Promise( resolve => {
+            // Here the bookId should be saved in database
+            setTimeout(() => {
+                console.log("BookId Saved!");
+            }, 2000);
+        });
+    }
+
+    const [pages, setPages] = useState([]);
+
+    const chargeBook = async (id) => {
+        const response = await axios.get(`http://localhost:8080/biv/api/books/id/${id}`);
+        setPages(() => response.data.pages);
+    }
+
+    const [bookId, setBookId] = useState(2222);
+
+    useEffect(() => {
+        chargeBook(bookId);
+    }, [bookId]);
+
+    const [saveQueue, addToSaveQueue] = useState([]);
+
+    const [saveState, setSaveState] = useState(false);
+
+
+    const restartSaveState = async () => {
+        await Promise.all(saveQueue);
+        setSaveState(() => false);
+        addToSaveQueue([]);
+    }
+
+    const addToSave = (element) => {
+        addToSaveQueue(() => {
+            let queue = saveQueue;
+            queue.push(element);
+            return queue;
+        });
+    }
+
+    useEffect(() => {
+        if (saveState) {
+            addToSave(apiRequest());
+            restartSaveState();
+        }
+    }, [saveState]);
+
+    const onSaveCallback = () => {
+        setSaveState(() => true);
+    }
+
     return (
         <div
             className={classes.root}
             >
-                <CreateDesignContext.Provider value={{ tempResAdded, addResource }}>
-                    <CreateNavbar/>
+                <CreateDesignContext.Provider 
+                    value={{ 
+                        tempResAdded,
+                        addResource,
+                        saveState,
+                        addToSave
+                    }}>
+                    <CreateNavbar handleSave={onSaveCallback}/>
                     <div className={classes.createContainer}>
                         <LeftDrop />
                         <div className={classes.pageContainer}>
-                            <BookPage />
+                            {pages.map(page => <BookPage pageNumber={page.num} templateId={page.templateId} />)}
                         </div>
                         <AddModal/>
                     </div>
