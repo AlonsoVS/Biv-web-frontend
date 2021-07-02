@@ -83,18 +83,28 @@ export default function Template(props) {
         if (saveState) onSave();
     }, [saveState]);
 
-    return (<>
-        {template && template.struct.map(element => 
+    const modifyElement = (modifiedElement) => {
+        if (saveState) {
+            const structure = template.struct;
+            const index = structure.findIndex(element => element.name === modifiedElement.name);
+            structure[index] = modifiedElement;
+            setTemplate(() => ({...template, struct: structure}));
+        }
+    }
+
+    return (
+        template && template.struct.map(element => 
             {   
+                const elementProps = {...element, modifyElement};
                 return (
                     <div id={element.name}>
                         <DragAndDrop position={{ x: element.position.x, y: element.position.y }}>
-                            <TemplateElement {...element}/>
+                            <TemplateElement {...elementProps}/>
                         </DragAndDrop>    
                     </div>
                     
                 )
             }
-    )}
-    </>);
+        )
+    );
 }

@@ -2,12 +2,16 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 function TemplateElement(props) {
-    const { position } = props;
-    const [elementProps, setElementProps] = useState(props);
+    const { modifyElement, ...properties } = props;
+    const [elementProps, setElementProps] = useState(properties);
 
     useEffect(() => {
-        setElementProps(props);
-    }, [position]);
+        setElementProps(properties);
+    }, [properties.position]);
+
+    useEffect(() => {
+        modifyElement(properties);
+    }, [properties]);
 
     const ref = useRef();
 

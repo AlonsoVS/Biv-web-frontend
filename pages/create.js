@@ -42,28 +42,28 @@ export default function Create() {
 
     const url = 'http://localhost:8080/biv/api/books';
 
-    const [tempResAdded, setTempResAdded] = useState(null);
-
-    const addResource = (resource) => {
-        setTempResAdded(() => resource);
-    }
+    const [book, setBook] = useState(() => null);
 
     const saveBook = () => {
         return axios.post(`${url}/save`, book);
     }
-
-    const [book, setBook] = useState(() => null);
 
     const chargeBook = async (id) => {
         const response = await axios.get(`${url}/id/${id}`);
         setBook(() => response.data);
     }
 
-    const [bookId, setBookId] = useState(null);
+    const [bookId, setBookId] = useState(2222);
 
     useEffect(() => {
         if (bookId) chargeBook(bookId);
     }, [bookId]);
+
+    const [tempResAdded, setTempResAdded] = useState(null);
+
+    const addResource = (resource) => {
+        if (book) setTempResAdded(() => resource);
+    }
 
     const [saveQueue, addToSaveQueue] = useState([]);
 

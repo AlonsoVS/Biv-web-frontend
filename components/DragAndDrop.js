@@ -35,7 +35,7 @@ export default function DragAndDrop(props) {
         event.preventDefault();
     }
 
-    const customZIndex = focused? 2: 1;
+    const customZIndex = focused? 2: 0;
 
     return (
         <div
